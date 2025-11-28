@@ -1,10 +1,11 @@
 from openai import OpenAI
+from google import genai
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
-API_KEY = os.getenv("API_KEY")
-client = OpenAI(api_key=API_KEY)
+API_KEY = os.getenv("GEMINI_KEY")
+client = genai.Client(api_key=API_KEY)
 
 
 def formatJson(focus: str = None, kneeAngles : list = None, centerOfGravity: list = None, speed: list = None, size : int = None) -> dict:
@@ -28,13 +29,13 @@ def createLLMPrompt(keyMetrics : dict) -> str:
 
         Biomechanics Data: {keyMetrics}
     """
-    
-    response = client.responses.create(
 
-        model="gpt-4o-mini",
-        input=prompt,
+    return prompt
+
+def queryLLM(prompt : str):
+    response = client.models.generate_content(
+        model="gemini-2.5-flash", 
+        contents=prompt
     )
 
-    return response.output_text
-    
-
+    return response.text
