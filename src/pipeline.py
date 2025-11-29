@@ -1,4 +1,5 @@
-import poseAnalysis
+import yoloPose.poseAnalysis as poseAnalysis
+import multiPlayerClassification.playerClass as playerClass
 import llm
 import os
 from dotenv import load_dotenv
@@ -18,8 +19,12 @@ def main():
 
     print(response)
 
+def testMultiPlayer():
+    playerClass.testYoloTracking()
+
 
     #pose analysis --> conv to json --> send downstream to llm --> return output
 
 if __name__ == "__main__":
-    main()
+    #main()
+    testMultiPlayer()
